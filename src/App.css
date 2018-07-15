@@ -24,6 +24,8 @@ body {
   display: flex;
   width: 100%;
   padding: 50px;
+  padding-bottom: 0;
+  padding-top: 20px;
 }
 
 .content .left,
@@ -91,7 +93,7 @@ input.email.error {
 }
 
 .loading {
-  margin-top: 5rem;
+  margin-top: 15rem;
   text-align: center;
   width: 100%;
   display: flex;
@@ -118,10 +120,15 @@ input.email.error {
 }
 
 .donate {
-  margin-top: 30px;
+  margin-top: 10px;
   text-align: center;
 }
 
 .smallest {
   font-size: 10px;
+}
+
+.right > div {
+  max-width: 400px;
+  margin: 0 auto;
 }

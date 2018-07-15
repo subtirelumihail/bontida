@@ -3,8 +3,13 @@ import Weather from './components/Weather';
 import EmailInput from './components/EmailInput';
 import Http from './services/httpService';
 import { ClipLoader } from 'react-spinners';
+import ReactGA from 'react-ga';
 import RandomGiphy from './components/RandomGiphy';
+import config from './conifg';
 import './App.css';
+
+ReactGA.initialize('UA-22508589-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 class App extends Component {
   constructor(props) {
@@ -13,6 +18,7 @@ class App extends Component {
       daily: null,
       today: null,
       loading: true,
+      backup: false,
       error: false,
       rain: {}
     };
@@ -22,14 +28,66 @@ class App extends Component {
     this.setState({
       loading: true
     })
-    Http.get('forecast')
-    .then(({ daily, today, rain }) => {
-      setTimeout(() => this.setState({
-        daily,
-        today,
+    const promise1 = new Promise((resolve, reject) => {
+      Http.get('forecast')
+      .then(({ daily, today, rain }) => {
+        setTimeout(() => this.setState({
+          daily,
+          today,
+          rain,
+          loading: false
+        }), 1000);
+      })
+    });
+
+    const promise2 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        this.handleBackupRequests();
+        resolve();
+      }, 4000, 'two');
+    });
+
+    Promise.race([promise1, promise2]);
+  }
+
+  handleSubscribedEvent = () => {
+    ReactGA.event({
+      category: 'User',
+      action: 'Subscribed to email'
+    });
+  }
+
+  handleBackupRequests = () => {
+    var daily = new Promise((resolve, reject) => {
+      Http.get(`forecast/daily?lang=ro&lat=46.909738&lon=23.807249&units=metric&APPID=${config.key}`, true)
+      .then((data) => {
+        this.setState({
+          daily: data
+        })
+        resolve(data);
+      })
+    });
+
+    var today = new Promise((resolve, reject) => {
+      Http.get(`weather?lang=ro&lat=46.909738&lon=23.807249&units=metric&APPID=${config.key}`, true)
+      .then((data) => {
+        this.setState({
+          today: data
+        })
+        resolve(data);
+      })
+    });
+
+    Promise.all([today, daily]).then((values) => {
+      const isItRainingNow = values[0].weather[0].id < 700;
+      const rain = {
+        isItRainingNow: isItRainingNow
+      }
+      this.setState({
         rain,
+        backup: true,
         loading: false
-      }), 1000);
+      })
     })
     .catch(() => {
       this.setState({
@@ -52,7 +110,7 @@ class App extends Component {
   }
 
   render() {
-    const { today, daily, loading, rain, error } = this.state;
+    const { today, daily, loading, rain, error, backup } = this.state;
     return (
       <div className="App">
         {
@@ -65,11 +123,15 @@ class App extends Component {
             {
               !error &&
               <div className="content">
-                <div className="left">
-                  <EmailInput />
-                </div>
+                {
+                  !backup &&
+                  <div className="left">
+                    <EmailInput subscribedEvent={this.handleSubscribedEvent} />
+                  </div>
+                }
                 <div className="right">
                   <Weather
+                    backup={backup}
                     loading={loading}
                     forecast={{ daily, today }}
                     city="bontida"
@@ -83,7 +145,6 @@ class App extends Component {
               <div className="smallest">
               si daca nu ti-a placut, doneaza mai mult
               </div>
-              <br />
               <br />
               <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                 <input type="hidden" name="cmd" value="_s-xclick"/>

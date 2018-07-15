@@ -4,7 +4,7 @@ import config from '../conifg';
 
 class CurrentForecast extends Component {
   render() {
-    const { forecast } = this.props;
+    const { forecast, backup } = this.props;
     if (!forecast) {
       return 'Probleme de conexiune, revenim imediat :)';
     }
@@ -18,7 +18,7 @@ class CurrentForecast extends Component {
           <div className="date">{date}</div>
         </div>
         <div className="icon"><img alt="icon" src={icon} /></div>
-        <div className="temp">{Math.ceil(temp - 273.15)}&deg;c</div>
+        <div className="temp">{backup ? temp : Math.ceil(temp - 273.15)}&deg;c</div>
       </div>
     );
   }

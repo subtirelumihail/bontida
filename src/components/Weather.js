@@ -10,7 +10,7 @@ class Weather extends Component {
     return (
       <div>
         <div className="current-forecast list-group" style={background}>
-          {<CurrentForecast forecast={today} city={this.props.city}/>}
+          {<CurrentForecast backup={this.props.backup} forecast={today} city={this.props.city}/>}
         </div>
         <div className="future-forecast list-group">
           {<FutureForecast forecast={daily} city={this.props.city}/>}

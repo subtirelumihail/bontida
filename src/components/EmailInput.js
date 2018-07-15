@@ -38,19 +38,31 @@ class EmailInput extends Component {
   }
 
   handleEmail = () => {
+    const { subscribedEvent } = this.props;
     const { value } = this.state;
     const hasError = this.handleValidate();
     if (!hasError) {
       this.setState({
         loading: true
       })
+      subscribedEvent();
       Http.post('subscribe', {
         email: value
       })
-      .then(() => {
+      .then(({ error }) => {
+        let errMessage = null;
+        let message = 'Felicitari, un email de confirmare a fost deja trimis pe adresa de email, pentru a activa notificarile te rugam sa dai click pe link-ul de confirmare';
+        if (error === 'already_subscribed') {
+          errMessage = 'Email-ul este deja inscris in aplicatie'
+        }
+
+        if (error === 'awaiting_confirmation') {
+          errMessage = 'Un email de confirmare a fost deja trimis pe adresa de email, verifica daca nu cumva a ajuns in spam'
+        }
         setTimeout(() => this.setState({
           loading: false,
-          message: 'Felicitari, acum vei primi alerte cand ploua in Bontida!'
+          error: errMessage,
+          message: errMessage ? null : message
         }), 1000);
       })
       .catch(() => {

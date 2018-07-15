@@ -13,11 +13,20 @@
     <meta name="og:url" content="http://ploualabontida.live/"/>
     <meta name="og:site_name" content="PloualaBontida?"/>
     <meta name="og:description" content="Afla cum e vremea la Bontida si aboneazate la alertele pentru ploaie"/>
+    <link href="css/main.css" rel="stylesheet">
     <title>Ploua la Bontida ?</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/main.css" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <div class="Confirm">
+      <h1>Din pacate a aparut o <u style="color:red">erroare</u> :(</h1>
+      <h3>Te rugam sa iti inscrii din nou mail-ul in aplicatie</h3>
+      <br />
+      <span class="redirect"><i>in 10 secunde vei fi redirectat catre pagina principala ...</i></span>
+    </div>
+    <script>
+      setTimeout(function() {
+        window.location.href = "/";
+      }, 10000);
+    </script>
   </body>
 </html>

@@ -34,7 +34,7 @@ class RandomGiphy extends Component {
       <div style = {{textAlign: 'center', marginTop: '40px'}}>
         <div className="gif-title">
           {
-            error ? 'BAM, Eroare' :
+            error ? 'BAM! EROARE' :
             (!isItRainingNow ?
               'Nu ploua !' : 'Ploua da e bine !')
           }
