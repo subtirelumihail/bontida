@@ -34,9 +34,6 @@ class App extends Component {
     .catch(() => {
       this.setState({
         error: true,
-        // rain: {
-        //   isItRainingNow: false
-        // },
         loading: false
       });
     });
@@ -83,6 +80,9 @@ class App extends Component {
             }
             <div className="donate">
               Daca ti-a placut, doneaza :)
+              <div className="smallest">
+              si daca nu ti-a placut, doneaza mai mult, tempulamea
+              </div>
               <br />
               <br />
               <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">

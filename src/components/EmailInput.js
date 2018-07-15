@@ -38,12 +38,15 @@ class EmailInput extends Component {
   }
 
   handleEmail = () => {
+    const { value } = this.state;
     const hasError = this.handleValidate();
     if (!hasError) {
       this.setState({
         loading: true
       })
-      Http.get('subscribe')
+      Http.post('subscribe', {
+        email: value
+      })
       .then(() => {
         setTimeout(() => this.setState({
           loading: false,
@@ -106,7 +109,13 @@ class EmailInput extends Component {
                   Aboneazate la alerte
                 </div>
           }
-        </div>
+          {!loading && !message &&
+            <div className="legal">
+              Prin apasarea butonului de "Aboneazate la alerte" sunteti de acord cu
+              <a href="/termenii.html" target="_blank"> termenii si conditiile</a>
+            </div>
+          }
+          </div>
       </div>
     )
   }

@@ -15,8 +15,8 @@ class RandomGiphy extends Component {
 
   loadImage = () => {
     const { isItRainingNow, error } = this.props;
-    const search = error ? 'error' : (isItRainingNow ? 'rain' : 'sunny day');
-    const randomOffset = getRandomInt(0, 15);
+    const search = error ? 'error' : (isItRainingNow ? 'not raining' : 'sun');
+    const randomOffset = getRandomInt(0, 35);
     Http.getExternal(`http://api.giphy.com/v1/gifs/search?q=${search}&api_key=dc6zaTOxFJmzC&limit=1&offset=${randomOffset}`)
     .then((res) => {
       this.setState({ imageSrc: res.data[0].images.original.url})
@@ -35,7 +35,8 @@ class RandomGiphy extends Component {
         <div className="gif-title">
           {
             error ? 'BAM, Eroare' :
-            (!isItRainingNow ? 'Nu ploua !' : 'Ploua da e bine !')
+            (!isItRainingNow ?
+              'Nu ploua !' : 'Ploua da e bine !')
           }
         </div>
         <img

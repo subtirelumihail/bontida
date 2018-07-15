@@ -51,7 +51,7 @@ body {
 
 .email-errors {
   position: absolute;
-  bottom: -10px;
+  bottom: 105px;
   text-align: center;
   color: red;
 }
@@ -118,5 +118,10 @@ input.email.error {
 }
 
 .donate {
+  margin-top: 30px;
   text-align: center;
+}
+
+.smallest {
+  font-size: 9px;
 }
