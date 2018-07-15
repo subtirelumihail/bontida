@@ -30,7 +30,7 @@
     </div>
     <script>
       var url = new URL(window.location.href);
-      var unsubscribeId = url.searchParams.get("unsubscribeId");
+      var recipientId = url.searchParams.get("recipientId");
       var options = {
         method: 'Post',
         headers: {
@@ -38,7 +38,7 @@
         },
         mode: 'cors',
         body: {
-          unsubscribeId: unsubscribeId
+          recipientId: recipientId
         }
       };
 
