@@ -14,19 +14,47 @@
     <meta name="og:site_name" content="PloualaBontida?"/>
     <meta name="og:description" content="Afla cum e vremea la Bontida si aboneazate la alertele pentru ploaie"/>
     <link href="css/main.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"></script>
     <title>Ploua la Bontida ?</title>
   </head>
   <body>
-    <div class="Confirm">
+    <div class="Confirm wait">
+      <h1>Email-ul se confirma, va rugam asteptati ...</h1>
+    </div>
+    <div class="Confirm hidden">
       <h1>Felicitari, email-ul a fost <u style="color: green">confirmat</u>.</h1>
       <h3>De acum inainte vei primi o notificare cu 2 ore inainte sa ploua in Bontida</h3>
       <br />
       <span class="redirect"><i>in 10 secunde vei fi redirectat catre pagina principala ...</i></span>
     </div>
     <script>
-      setTimeout(function() {
-        window.location.href = "/";
-      }, 10000);
+      var url = new URL(window.location.href);
+      var recipientId = url.searchParams.get("recipientId");
+      var options = {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        mode: 'cors',
+        body: {
+          recipientId: recipientId
+        }
+      };
+
+      fetch ('http://178.128.43.124:3000/confirm', options)
+        .then(function(response) {
+          var confirm = document.querySelector(".Confirm.hidden");
+          var wait = document.querySelector(".wait");
+          confirm.classList.remove("hidden");
+          wait.classList.add("hidden");
+          setTimeout(function() {
+            window.location.href = "/";
+          }, 10000);
+        })
+        .catch(function(body) {
+          window.location.href = "/error.html";
+        })
     </script>
   </body>
 </html>
