@@ -81,7 +81,7 @@ class App extends Component {
             <div className="donate">
               Daca ti-a placut, doneaza :)
               <div className="smallest">
-              si daca nu ti-a placut, doneaza mai mult, tempulamea
+              si daca nu ti-a placut, doneaza mai mult
               </div>
               <br />
               <br />
