@@ -32,7 +32,7 @@ const httpService = {
         'Content-Type': 'application/json; charset=utf-8',
       },
       mode: 'cors',
-      body
+      body: JSON.stringify(body)
     })
     .then(function(response){
       return response.json();

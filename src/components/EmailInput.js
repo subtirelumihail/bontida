@@ -49,14 +49,14 @@ class EmailInput extends Component {
       Http.post('subscribe', {
         email: value
       })
-      .then(({ error }) => {
+      .then(({ errors }) => {
         let errMessage = null;
         let message = 'Felicitari, un email de confirmare a fost deja trimis pe adresa de email, pentru a activa notificarile te rugam sa dai click pe link-ul de confirmare';
-        if (error === 'already_subscribed') {
+        if (errors === 'already_subscribed') {
           errMessage = 'Email-ul este deja inscris in aplicatie'
         }
 
-        if (error === 'awaiting_confirmation') {
+        if (errors === 'awaiting_confirmation') {
           errMessage = 'Un email de confirmare a fost deja trimis pe adresa de email, verifica daca nu cumva a ajuns in spam'
         }
         setTimeout(() => this.setState({

@@ -42,6 +42,10 @@ class App extends Component {
 
     const promise2 = new Promise((resolve, reject) => {
       setTimeout(() => {
+        const { loading } = this.state;
+        if (!loading) {
+          return null;
+        }
         this.handleBackupRequests();
         resolve();
       }, 4000, 'two');
@@ -143,7 +147,7 @@ class App extends Component {
             <div className="donate">
               Daca ti-a placut, doneaza :)
               <div className="smallest">
-              si daca nu ti-a placut, doneaza mai mult
+              si daca nu ti-a placut, doneaza mai mult (daca ai tupeu)
               </div>
               <br />
               <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
