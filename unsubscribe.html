@@ -32,17 +32,14 @@
       var url = new URL(window.location.href);
       var recipientId = url.searchParams.get("recipientId");
       var options = {
-        method: 'Post',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
         },
-        mode: 'cors',
-        body: {
-          recipientId: recipientId
-        }
+        mode: 'cors'
       };
 
-      fetch ('http://178.128.43.124:3000/unsubscribe', options)
+      fetch ('http://178.128.43.124:3000/unsubscribe?recipientId=' + recipientId, options)
         .then(function(response) {
           var confirm = document.querySelector(".Confirm.hidden");
           var wait = document.querySelector(".wait");
